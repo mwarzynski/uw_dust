@@ -1,0 +1,105 @@
+comment "//" ;
+
+token TokenBool {"true"} | {"false"} ;
+
+Prog.    Program  ::= [Decl] ;
+
+DStruct.   Decl ::= Struct ;
+DFunction. Decl ::= Function ;
+DVar.      Decl ::= Var ";" ;
+
+DVarOnly.     Var ::= VarOnly ;
+DVarExpr.     Var ::= VarExpr ;
+
+IStruct. Struct ::= "struct" Ident "{" [VarOnly] "}" ;
+
+FunOne.  Function ::= "fn" Ident "(" [Var] ")" "->" Type "{" [Stm] "}" ;
+FunStr.  Function ::= "fn" Ident "(" [Var] ")" "->" Ident "{" [Stm] "}" ;
+FunNone. Function ::= "fn" Ident "(" [Var] ")" "->" "{" [Stm] "}" ;
+
+Dec.       VarOnly     ::= Ident ":" Type ;
+DecSet.    VarExpr     ::= Ident ":" Type "=" Exp2 ;
+DecStruct. VarOnly     ::= Ident ":" Ident ;
+DecDict.   VarOnly     ::= Ident ":" "{" Type "->" Type "}" ;
+
+DecArr.        VarExpr   ::= Ident ":" "[" Type "]" "=" "[" [Exp] "]";
+DecStructSet.  VarExpr   ::= Ident ":" Ident "=" Exp2 ;
+DecArrMul.     VarOnly   ::= Ident ":" "[" Type "*" Integer "]";
+DecArrMulInit. VarExpr   ::= Ident ":" "[" Type "*" Integer "]" "=" "[" Exp "," ".." "]";
+
+terminator Stm "" ;
+
+separator  Decl "" ;
+separator  VarOnly "," ;
+separator  VarExpr "," ;
+separator  Var  "," ;
+separator  nonempty Ident "," ;
+
+SFunc.   Stm ::= Function ;
+SDecl.   Stm ::= Var ";" ;
+SExp.    Stm ::= Exp ";" ;
+SBlock.  Stm ::= "{" [Stm] "}" ;
+SWhile.  Stm ::= "while"  Exp  Stm ;
+SForD.   Stm ::= "for" Var "," Exp "," Exp Stm ;
+SForE.   Stm ::= "for" Exp "," Exp "," Exp Stm ;
+SIf.     Stm ::= "if" Exp  Stm ;
+SIfElse. Stm ::= "if" Exp  Stm "else" Stm ;
+
+SReturnOne.    Stm ::= "return" Exp ";" ;
+SReturn.       Stm ::= "return" ";" ;
+
+SJContinue. Stm ::= "continue" ";" ;
+SJBreak.    Stm ::= "break" ";" ;
+
+EAss.    Exp  ::= Ident "=" Exp3 ;
+EAssArr. Exp  ::= Ident "[" Exp6 "]" "=" Exp3 ;
+EAssStr. Exp  ::= Ident "." Ident "=" Exp2 ;
+
+EEPlus.  Exp2 ::= Ident "+=" Exp2 ;
+EEMinus. Exp2 ::= Ident "-=" Exp2 ;
+
+ElOr.    Exp3 ::= Exp3 "||" Exp3;
+ElAnd.   Exp3 ::= Exp3 "&&" Exp3;
+
+EEq.     Exp4 ::= Exp4 "==" Exp4 ;
+ENEq.    Exp4 ::= Exp4 "!=" Exp4 ;
+
+ELt.     Exp5 ::= Exp5 "<" Exp5 ;
+ELtE.    Exp5 ::= Exp5 "<=" Exp5 ;
+ELt2.    Exp5 ::= Exp5 "<" Exp5 "<" Exp5 ;
+EGt.     Exp5 ::= Exp5 ">" Exp5 ;
+EGtE.    Exp5 ::= Exp5 ">=" Exp5 ;
+EGt2.    Exp5 ::= Exp5 ">" Exp5 ">" Exp5 ;
+
+EAdd.    Exp6 ::= Exp6 "+" Exp6 ;
+ESub.    Exp6 ::= Exp6 "-" Exp6 ;
+EMul.    Exp6 ::= Exp6 "*" Exp6 ;
+EDiv.    Exp6 ::= Exp6 "/" Exp6 ;
+
+Call.    Exp7 ::= Ident "(" [Exp] ")" ;
+EVarArr. Exp7 ::= Ident "[" Exp6 "]" ;
+EStrAtt. Exp7 ::= Ident "." Ident ;
+
+EPPos.   Exp7 ::= Ident "++";
+EMMin.   Exp7 ::= Ident "--";
+
+EBNeg.   Exp7 ::= "!" Exp7 ;
+ENeg.    Exp7 ::= "-" Exp7 ;
+EPos.    Exp7 ::= "+" Exp7 ;
+
+EVar.    Exp7 ::= Ident ;
+EStr.    Exp7 ::= String ;
+EInt.    Exp7 ::= Integer ;
+EFloat.  Exp7 ::= Double ;
+EBool.   Exp7 ::= TokenBool ;
+
+coercions Exp 7 ;
+
+separator Exp "," ;
+
+TInt.   Type ::= "int" ;
+TFloat. Type ::= "float" ;
+TStr.   Type ::= "str" ;
+TBool.  Type ::= "bool" ;
+
+separator Type  "," ;
