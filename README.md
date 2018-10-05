@@ -16,7 +16,7 @@ Supported types:
  - `bool` (boolean)
 
 Example of string usage:
-```
+```rust
 text:str = "some text";
 print(text); // print text to stdout
 ```
@@ -47,13 +47,13 @@ Also, there are two fancy three arguments comparisons:
 
 For `if`, `while` require statement without parentheses.
 Example:
-```
+```rust
 while i < 10 {
   i++;
 }
 ```
 Example if:
-```
+```rust
 if 0 < i < 10 && 0 < j {
   return true;
 } else {
@@ -71,7 +71,7 @@ if a {
 Elif is not supported.
 
 ## For
-```
+```rust
 for i:int = 0, i < 10, i++ {
   // do something  
 }
@@ -89,14 +89,14 @@ Outside these Keywords produce an error.
 ## Functions
 
 Function declaration:
-```
+```rust
 fn function_name() -> int {}
 fn function_name2(a:int) -> {}
 ```
 Functions accept as arguments only basic types (built-in types and structs).
 Functions might be declared inside other functions (and then will be
 visible only in the local scope). Therefore nested functions declarations are allowed.
-```
+```rust
 
 fn hello_world() -> {
     fn hello_world_better() -> {
@@ -114,7 +114,7 @@ correct usage of types in provided code.
 ## Arrays
 
 There are three ways to declare an array:
-```
+```rust
 // array's length will be determined from value
 a: [int] = [1,2,3,4,5];
 // array's length is 10
@@ -124,19 +124,19 @@ a: [int*10] = [ 1, .. ];
 ```
 
 You may access array values in the standard way:
-```
+```rust
 a[0]; // where 0 is an index
 ```
 
 ## Dicts
 
 There is only one way to declare dict:
-```
+```rust
 scores: {str -> int}; // creates new, empty dict
 ```
 
 Setting values (for keys) and accessing them is as follows:
-```
+```rust
 scores["MIM"] = 100;
 scores["PW"]  = 1;
 
@@ -153,7 +153,7 @@ Structs might be initialized anywhere, but their attributes must be of built-in 
 (see: supported types).
 
 Struct declaration:
-```
+```rust
 struct Point {
   x: int,
   y: int
@@ -161,7 +161,7 @@ struct Point {
 ```
 
 How to use?
-```
+```rust
 p: Point;
 p.x = 10;
 p.y = 20;
